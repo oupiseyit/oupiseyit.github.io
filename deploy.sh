@@ -16,7 +16,7 @@
 set -e
 
 GITHUB_USER="oupiseyit"
-REPO_NAME="${GITHUB_USER}.github.io"
+REPO_NAME="pisey-ou.github.io"
 HTTPS_URL="https://github.com/${GITHUB_USER}/${REPO_NAME}.git"
 SSH_URL="git@github.com:${GITHUB_USER}/${REPO_NAME}.git"
 REMOTE_URL="${HTTPS_URL}"
@@ -124,7 +124,7 @@ cat <<EOF
 
 🎉  All done.
 
-Your site:   https://${GITHUB_USER}.github.io
+Your site:   https://pisey-ou.github.io
 The repo:    https://github.com/${GITHUB_USER}/${REPO_NAME}
 
 If the page doesn't appear in a minute or two, check Pages settings:
