@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
-# deploy.sh — publish & update https://pisey-ou.github.io
+# deploy.sh — publish & update https://oupiseyit.github.io
 #
 # First run:  initialises the repo and force-pushes the portfolio.
 # Later runs: detects an existing repo and just pushes new changes
 #             (so use this every time you want to update the site).
 #
 # Prerequisites:
-#   • The empty repo "pisey-ou.github.io" already exists on GitHub.
+#   • The empty repo "oupiseyit.github.io" already exists on GitHub
+#     (a "user site" repo MUST be named exactly <your-username>.github.io).
 #   • You can authenticate with either:
 #       - GitHub CLI (`brew install gh && gh auth login`), or
 #       - HTTPS + Personal Access Token at the password prompt
@@ -14,10 +15,11 @@
 
 set -e
 
-GITHUB_USER="pisey-ou"
+GITHUB_USER="oupiseyit"
 REPO_NAME="${GITHUB_USER}.github.io"
 HTTPS_URL="https://github.com/${GITHUB_USER}/${REPO_NAME}.git"
 SSH_URL="git@github.com:${GITHUB_USER}/${REPO_NAME}.git"
+REMOTE_URL="${HTTPS_URL}"
 
 # ---------- helpers ----------
 say()   { printf "\n\033[1;36m==> %s\033[0m\n" "$*"; }
@@ -30,14 +32,10 @@ die()   { printf "\033[1;31m✘\033[0m %s\n" "$*"; exit 1; }
 command -v git >/dev/null || die "git is not installed. Install with: xcode-select --install"
 
 # ---------- auth strategy ----------
-USE_GH=0
 if command -v gh >/dev/null 2>&1 && gh auth status >/dev/null 2>&1; then
-  USE_GH=1
   ok "GitHub CLI detected and authenticated."
-  REMOTE_URL="${HTTPS_URL}"
 else
-  REMOTE_URL="${HTTPS_URL}"
-  warn "GitHub CLI not authenticated — you'll be prompted for a Personal Access Token."
+  warn "GitHub CLI not authenticated — git will prompt for a Personal Access Token."
   warn "(Generate one at https://github.com/settings/tokens with the 'repo' scope.)"
 fi
 
@@ -54,6 +52,21 @@ if [[ -d ".git" ]]; then
   fi
 fi
 
+# ---------- ensure remote is correct ----------
+ensure_remote() {
+  if git remote get-url origin >/dev/null 2>&1; then
+    CURRENT_URL="$(git remote get-url origin)"
+    if [[ "${CURRENT_URL}" != "${REMOTE_URL}" && "${CURRENT_URL}" != "${SSH_URL}" ]]; then
+      warn "Existing 'origin' points at ${CURRENT_URL}"
+      warn "Resetting it to ${REMOTE_URL}"
+      git remote set-url origin "${REMOTE_URL}"
+    fi
+  else
+    say "Adding 'origin' remote: ${REMOTE_URL}"
+    git remote add origin "${REMOTE_URL}"
+  fi
+}
+
 # ---------- fresh init path ----------
 if [[ $NEED_INIT -eq 1 ]]; then
   say "Initialising fresh git repo on branch 'main'"
@@ -69,18 +82,14 @@ if [[ $NEED_INIT -eq 1 ]]; then
   git commit -m "Initial commit: portfolio site (day/night theme + load animations)" >/dev/null
   ok "Commit created."
 
-  say "Wiring up remote: ${REMOTE_URL}"
-  git remote add origin "${REMOTE_URL}"
+  ensure_remote
 
   say "Pushing to GitHub (force, since this is the first publish)"
   git push -u origin main --force
   ok "First publish complete."
 else
   # ---------- update path ----------
-  if ! git remote get-url origin >/dev/null 2>&1; then
-    say "No 'origin' remote found — adding ${REMOTE_URL}"
-    git remote add origin "${REMOTE_URL}"
-  fi
+  ensure_remote
 
   say "Staging local changes"
   git add .
@@ -95,8 +104,19 @@ else
   fi
 
   say "Pushing to GitHub"
-  git push origin main
-  ok "Push complete."
+  if ! git push origin main; then
+    warn "Standard push rejected — the remote and local histories diverge."
+    warn "This usually happens when GitHub auto-created a README on the repo."
+    read -rp "Force-push and overwrite the remote? [y/N]: " ANSWER
+    if [[ "${ANSWER}" =~ ^[Yy]$ ]]; then
+      git push origin main --force
+      ok "Force-push complete."
+    else
+      die "Aborted. To merge instead, run:  git pull --rebase origin main  &&  bash deploy.sh"
+    fi
+  else
+    ok "Push complete."
+  fi
 fi
 
 # ---------- final hint ----------
