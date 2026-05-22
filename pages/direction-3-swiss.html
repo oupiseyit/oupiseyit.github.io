@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pisey Ou — Web Developer & Educator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --white: #f2f0ec;
+  --black: #0a0a09;
+  --red: #e8231a;
+  --red2: rgba(232,35,26,0.08);
+  --gray: #888882;
+  --gray2: rgba(10,10,9,0.45);
+  --gray3: rgba(10,10,9,0.18);
+  --border: rgba(10,10,9,0.15);
+  --display: 'Bebas Neue', 'Arial Black', sans-serif;
+  --body: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  --text: 'Barlow', 'Arial', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--white);
+  color: var(--black);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: var(--black);
+  border-bottom: 3px solid var(--red);
+}
+.nav-inner {
+  max-width: 1280px; margin: 0 auto; padding: 0 48px;
+  display: flex; align-items: stretch; justify-content: space-between;
+  height: 56px;
+}
+.logo-block {
+  display: flex; align-items: center; gap: 12px;
+  border-right: 1px solid rgba(255,255,255,0.1);
+  padding-right: 24px; margin-right: 0;
+}
+.logo-square {
+  width: 32px; height: 32px;
+  background: var(--red);
+  display: grid; place-items: center;
+  font-family: var(--display); font-size: 18px; color: var(--white);
+  letter-spacing: 0.05em; flex-shrink: 0;
+}
+.logo-text { font-family: var(--display); font-size: 22px; color: var(--white); letter-spacing: 0.1em; }
+.nav-links {
+  display: flex; align-items: stretch;
+}
+.nav-links a {
+  display: flex; align-items: center;
+  padding: 0 20px; color: rgba(255,255,255,0.5);
+  font-family: var(--body); font-size: 13px; font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  border-right: 1px solid rgba(255,255,255,0.08);
+  transition: all 0.15s;
+}
+.nav-links a:first-child { border-left: 1px solid rgba(255,255,255,0.08); }
+.nav-links a:hover { color: var(--white); background: rgba(255,255,255,0.05); }
+.nav-right { display: flex; align-items: center; gap: 0; }
+.btn-s {
+  font-family: var(--body); font-size: 12px; font-weight: 500;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  padding: 0 24px; height: 100%;
+  display: flex; align-items: center;
+  background: transparent; color: rgba(255,255,255,0.5);
+  border: none; cursor: pointer; text-decoration: none;
+  transition: all 0.15s;
+  border-left: 1px solid rgba(255,255,255,0.1);
+}
+.btn-s:hover { color: var(--white); }
+.btn-s.red { background: var(--red); color: var(--white); }
+.btn-s.red:hover { background: #c41d15; }
+
+/* ── HERO ── */
+.hero { padding-top: 56px; position: relative; overflow: hidden; }
+
+.hero-ticker {
+  background: var(--red); color: var(--white);
+  font-family: var(--body); font-size: 12px; font-weight: 500;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  padding: 8px 48px;
+  display: flex; align-items: center; gap: 40px;
+  white-space: nowrap;
+}
+.ticker-sep { opacity: 0.5; }
+
+.hero-main {
+  max-width: 1280px; margin: 0 auto; padding: 0 48px;
+  display: grid; grid-template-columns: 1fr 520px;
+  min-height: calc(100vh - 80px);
+}
+
+.hero-left {
+  border-right: 1px solid var(--border);
+  padding: 64px 64px 64px 0;
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative;
+}
+
+/* Big background number */
+.hero-left::before {
+  content: '01';
+  position: absolute; bottom: -20px; left: -10px;
+  font-family: var(--display); font-size: clamp(180px, 28vw, 340px);
+  color: rgba(10,10,9,0.04); line-height: 1;
+  pointer-events: none; z-index: 0; letter-spacing: -0.04em;
+}
+
+.hero-eyebrow {
+  font-family: var(--body); font-size: 11px; font-weight: 600;
+  letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--red); margin-bottom: 20px;
+  display: flex; align-items: center; gap: 12px; position: relative; z-index: 1;
+}
+.eyebrow-line { width: 48px; height: 2px; background: var(--red); display: inline-block; }
+
+.hero h1 {
+  font-family: var(--display); font-size: clamp(60px, 10vw, 140px);
+  line-height: 0.88; letter-spacing: 0.02em;
+  color: var(--black); margin-bottom: 36px;
+  position: relative; z-index: 1;
+}
+.hero h1 .red-word { color: var(--red); }
+
+.hero-lede {
+  font-family: var(--text); font-size: 17px; font-weight: 300;
+  color: var(--gray); line-height: 1.65; max-width: 540px;
+  margin-bottom: 44px; position: relative; z-index: 1;
+}
+
+.hero-cta { display: flex; gap: 0; position: relative; z-index: 1; }
+.btn-block {
+  font-family: var(--body); font-size: 13px; font-weight: 600;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  padding: 16px 32px; display: inline-block;
+  text-decoration: none; transition: all 0.15s;
+  border: 2px solid transparent;
+}
+.btn-block.black { background: var(--black); color: var(--white); }
+.btn-block.black:hover { background: var(--red); border-color: var(--red); }
+.btn-block.outline { background: transparent; color: var(--black); border: 2px solid var(--black); }
+.btn-block.outline:hover { background: var(--black); color: var(--white); }
+
+.hero-right {
+  padding: 0 0 0 48px;
+  display: flex; flex-direction: column;
+  border-left: 1px solid var(--border);
+  margin-left: -1px;
+}
+
+.hero-img-container {
+  flex: 1; background: var(--black); position: relative; overflow: hidden;
+  min-height: 400px;
+}
+.hero-img-container img {
+  width: 100%; height: 100%; object-fit: cover;
+  opacity: 0.8;
+  filter: contrast(1.1) grayscale(10%);
+  mix-blend-mode: luminosity;
+}
+.hero-img-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(10,10,9,0.9) 0%, transparent 50%);
+}
+.hero-img-label {
+  position: absolute; bottom: 20px; left: 20px; right: 20px;
+  font-family: var(--body); font-size: 11px; font-weight: 500;
+  letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.5);
+}
+.hero-img-name {
+  font-family: var(--display); font-size: 32px; color: var(--white); letter-spacing: 0.05em;
+}
+
+.hero-stats {
+  display: grid; grid-template-columns: 1fr 1fr;
+  border-top: none;
+}
+.stat-box {
+  padding: 20px 24px; border: 1px solid var(--border);
+  border-top: none; border-right: none;
+  transition: background 0.15s;
+}
+.stat-box:nth-child(even) { border-right: 1px solid var(--border); }
+.stat-box:hover { background: var(--red2); }
+.stat-num {
+  font-family: var(--display); font-size: 32px; color: var(--black);
+  line-height: 1; margin-bottom: 4px; letter-spacing: 0.02em;
+}
+.stat-label { font-family: var(--body); font-size: 11px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray); }
+
+@media (max-width: 900px) {
+  .hero-main { grid-template-columns: 1fr; }
+  .hero-left { border-right: none; padding: 48px 0; }
+  .hero-right { padding: 0; border-left: none; }
+  .hero-img-container { min-height: 280px; }
+}
+
+/* ── SECTION SHELL ── */
+.section {
+  max-width: 1280px; margin: 0 auto; padding: 100px 48px;
+}
+.section-head {
+  display: grid; grid-template-columns: 80px 1fr;
+  gap: 32px; align-items: start; margin-bottom: 64px;
+  padding-bottom: 24px; border-bottom: 3px solid var(--black);
+}
+.section-num {
+  font-family: var(--display); font-size: 64px; color: var(--red);
+  line-height: 0.85; letter-spacing: 0.02em;
+}
+.section-head-right { padding-top: 6px; }
+.section-eyebrow {
+  font-family: var(--body); font-size: 11px; font-weight: 600;
+  letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--gray); margin-bottom: 8px;
+}
+.section-title {
+  font-family: var(--display); font-size: clamp(40px, 5.5vw, 72px);
+  line-height: 0.9; letter-spacing: 0.02em; color: var(--black);
+}
+
+/* ABOUT */
+.about-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 80px; }
+.about-text p { font-family: var(--text); font-size: 16px; font-weight: 300; color: var(--gray2); line-height: 1.8; margin-bottom: 18px; }
+.about-text p strong { color: var(--black); font-weight: 500; }
+.about-meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 2px solid var(--black); }
+.meta-item {
+  padding: 20px 22px; border-bottom: 1px solid var(--border); border-right: 1px solid var(--border);
+  transition: background 0.15s;
+}
+.meta-item:hover { background: var(--red2); }
+.meta-item:nth-child(even) { border-right: none; }
+.meta-item:nth-last-child(-n+2) { border-bottom: none; }
+.meta-k { font-family: var(--body); font-size: 10px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gray); margin-bottom: 6px; }
+.meta-v { font-family: var(--display); font-size: 22px; color: var(--black); letter-spacing: 0.04em; }
+
+@media (max-width: 800px) { .about-grid { grid-template-columns: 1fr; gap: 48px; } }
+
+/* SKILLS */
+.skills-block { border-top: 2px solid var(--black); }
+.skill-row {
+  display: grid; grid-template-columns: 48px 1fr 200px auto;
+  gap: 24px; align-items: center;
+  border-bottom: 1px solid var(--border); padding: 0;
+  transition: all 0.12s; cursor: default;
+}
+.skill-row:hover { background: var(--red2); }
+.skill-row:hover .skill-idx { color: var(--red); }
+.skill-idx { font-family: var(--display); font-size: 26px; color: var(--gray3); letter-spacing: 0.04em; padding: 18px 0 18px 4px; }
+.skill-nm { font-family: var(--display); font-size: 28px; letter-spacing: 0.04em; color: var(--black); padding: 18px 0; }
+.skill-ds { font-family: var(--text); font-size: 13px; font-weight: 300; color: var(--gray); }
+.skill-tag { font-family: var(--body); font-size: 10px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gray); padding: 18px 4px 18px 0; text-align: right; }
+.skill-tag.core { color: var(--red); }
+
+@media (max-width: 760px) {
+  .skill-row { grid-template-columns: 40px 1fr auto; }
+  .skill-ds { display: none; }
+  nav .nav-links { display: none; }
+}
+
+/* EXPERIENCE */
+.exp-list { border-top: 2px solid var(--black); }
+.exp-item {
+  display: grid; grid-template-columns: 180px 1fr auto;
+  gap: 40px; align-items: center;
+  border-bottom: 1px solid var(--border);
+  padding: 0; transition: all 0.15s;
+}
+.exp-item:hover { background: var(--red2); }
+.exp-item:hover .exp-role { color: var(--red); }
+.exp-date { font-family: var(--body); font-size: 13px; font-weight: 400; color: var(--gray); padding: 24px 0; letter-spacing: 0.06em; }
+.exp-body { padding: 24px 0; }
+.exp-role { font-family: var(--display); font-size: 30px; letter-spacing: 0.04em; color: var(--black); margin-bottom: 4px; transition: color 0.15s; }
+.exp-company { font-family: var(--body); font-size: 14px; font-weight: 400; color: var(--gray); }
+.exp-badge {
+  font-family: var(--body); font-size: 10px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
+  padding: 6px 12px; border: 2px solid var(--black); color: var(--black);
+  white-space: nowrap; align-self: center;
+}
+.exp-badge.active { background: var(--black); color: var(--white); }
+
+@media (max-width: 700px) {
+  .exp-item { grid-template-columns: 1fr; gap: 8px; padding: 20px 0; }
+  .exp-date { padding: 0; }
+  .exp-body { padding: 0; }
+  .exp-badge { align-self: auto; width: fit-content; }
+}
+
+/* EDUCATION */
+.edu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 2px solid var(--black); }
+.edu-item {
+  padding: 32px 28px; border-right: 1px solid var(--border);
+  position: relative; overflow: hidden; transition: background 0.15s;
+}
+.edu-item:last-child { border-right: none; }
+.edu-item:hover { background: var(--red2); }
+.edu-item::before {
+  content: attr(data-num);
+  position: absolute; bottom: -10px; right: 4px;
+  font-family: var(--display); font-size: 80px; color: rgba(10,10,9,0.05);
+  line-height: 1; pointer-events: none;
+}
+.edu-yr { font-family: var(--body); font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gray); margin-bottom: 14px; }
+.edu-deg { font-family: var(--display); font-size: 20px; letter-spacing: 0.04em; color: var(--black); line-height: 1.15; margin-bottom: 8px; }
+.edu-sch { font-family: var(--body); font-size: 14px; font-weight: 400; color: var(--gray); }
+
+@media (max-width: 760px) { .edu-grid { grid-template-columns: 1fr; } .edu-item { border-right: none; border-bottom: 1px solid var(--border); } }
+
+/* CERTS */
+.certs-block { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0; border: 2px solid var(--black); }
+.cert-item {
+  padding: 20px 22px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  font-family: var(--body); font-size: 14px; font-weight: 400; color: var(--gray2);
+  display: flex; align-items: center; gap: 10px;
+  transition: all 0.15s;
+}
+.cert-item:hover { background: var(--black); color: var(--white); }
+.cert-item::before { content: '→'; color: var(--red); font-size: 16px; flex-shrink: 0; }
+
+/* CONTACT */
+.contact-band { background: var(--black); color: var(--white); padding: 100px 48px; }
+.contact-inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.contact-h { font-family: var(--display); font-size: clamp(48px, 7vw, 100px); line-height: 0.9; letter-spacing: 0.02em; }
+.contact-h .red-word { color: var(--red); }
+.contact-right p { font-family: var(--text); font-size: 16px; font-weight: 300; color: rgba(255,255,255,0.55); line-height: 1.75; margin-bottom: 36px; }
+.contact-btns { display: flex; gap: 0; }
+.btn-b {
+  font-family: var(--body); font-size: 12px; font-weight: 600;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  padding: 16px 28px; display: inline-block; text-decoration: none;
+  transition: all 0.15s; border: 2px solid transparent;
+}
+.btn-b.w { background: var(--white); color: var(--black); }
+.btn-b.w:hover { background: var(--red); color: var(--white); }
+.btn-b.o { background: transparent; color: rgba(255,255,255,0.6); border: 2px solid rgba(255,255,255,0.2); }
+.btn-b.o:hover { border-color: var(--white); color: var(--white); }
+
+@media (max-width: 760px) { .contact-inner { grid-template-columns: 1fr; gap: 40px; } }
+
+/* FOOTER */
+footer {
+  background: var(--black); border-top: 3px solid var(--red);
+  padding: 0;
+}
+.footer-inner {
+  max-width: 1280px; margin: 0 auto;
+  display: flex; align-items: stretch;
+}
+.footer-cell {
+  padding: 24px 32px;
+  border-right: 1px solid rgba(255,255,255,0.08);
+  font-family: var(--body); font-size: 12px; font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(255,255,255,0.35); display: flex; align-items: center;
+}
+.footer-cell:last-child { border-right: none; margin-left: auto; }
+.footer-cell a { color: rgba(255,255,255,0.35); text-decoration: none; transition: color 0.15s; }
+.footer-cell a:hover { color: var(--white); }
+.footer-cell.name { font-family: var(--display); font-size: 20px; color: rgba(255,255,255,0.6); letter-spacing: 0.08em; }
+
+/* STATUS BADGE */
+.status-pill {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: var(--body); font-size: 11px; font-weight: 600;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(255,255,255,0.5); border: 1px solid rgba(255,255,255,0.15);
+  padding: 6px 14px; margin-bottom: 28px;
+}
+.status-pill .dot { width: 6px; height: 6px; background: var(--red); border-radius: 50%; animation: blink 2s ease-in-out infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.35} }
+
+/* REVEAL */
+.reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal.vis { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="logo-block">
+      <div class="logo-square">P</div>
+      <span class="logo-text">PISEY.OU</span>
+    </div>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
+      <a href="#education">Education</a>
+    </div>
+    <div class="nav-right">
+      <a href="https://www.linkedin.com/in/pisey-ou-78b830184" target="_blank" class="btn-s">LinkedIn</a>
+      <a href="mailto:oupisey.it@gmail.com" class="btn-s red">Get in touch →</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero" id="top">
+  <div class="hero-ticker">
+    <span>Web Developer</span>
+    <span class="ticker-sep">·</span>
+    <span>Educator</span>
+    <span class="ticker-sep">·</span>
+    <span>Phnom Penh, Cambodia</span>
+    <span class="ticker-sep">·</span>
+    <span>10+ Years Experience</span>
+    <span class="ticker-sep">·</span>
+    <span>Available 2026</span>
+    <span class="ticker-sep">·</span>
+    <span>React · AWS · Node.js</span>
+    <span class="ticker-sep">·</span>
+    <span>ApexDreamLab</span>
+  </div>
+
+  <div class="hero-main">
+    <div class="hero-left">
+      <div class="hero-eyebrow">
+        <span class="eyebrow-line"></span>
+        Web Developer &amp; Educator
+      </div>
+      <h1>
+        BUILDING<br>
+        THE <span class="red-word">WEB,</span><br>
+        TEACHING<br>
+        THE NEXT.
+      </h1>
+      <p class="hero-lede">
+        I'm Pisey Ou — a decade at the intersection of shipping interfaces and shaping the developers who'll build what comes next. React, AWS, databases, and lecture halls.
+      </p>
+      <div class="hero-cta">
+        <a href="#experience" class="btn-block black">View my work →</a>
+        <a href="mailto:oupisey.it@gmail.com" class="btn-block outline">Get in touch</a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="hero-img-container">
+        <img src="../profile-image.png" alt="Pisey Ou" onerror="this.style.background='#222';this.removeAttribute('src')">
+        <div class="hero-img-overlay"></div>
+        <div class="hero-img-label">
+          <div>Web Developer · Educator</div>
+          <div class="hero-img-name">PISEY OU</div>
+        </div>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-box">
+          <div class="stat-num">10+</div>
+          <div class="stat-label">Years Exp.</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">2</div>
+          <div class="stat-label">Roles Active</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">3</div>
+          <div class="stat-label">Degrees</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">6</div>
+          <div class="stat-label">Employers</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section reveal" id="about">
+  <div class="section-head">
+    <div class="section-num">01</div>
+    <div class="section-head-right">
+      <div class="section-eyebrow">About</div>
+      <div class="section-title">A DEVELOPER WHO ALSO TEACHES</div>
+    </div>
+  </div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>I've spent the last <strong>10+ years</strong> at the intersection of building and teaching. By day I ship web applications — React front-ends, AWS-backed services, and the database layers that hold them together.</p>
+      <p>In parallel, I lecture computer science at <strong>PSBU University</strong> in Phnom Penh, helping the next generation of Cambodian developers find their footing.</p>
+      <p>My path started in game development, moved through agency web work at Marinax and Suka Digital, and now lives at <strong>ApexDreamLab</strong>, where I'm focused on modern, performant, beautifully made digital products.</p>
+      <p>I hold an <strong>MSIT from Norton University</strong> and dual bachelor's in Computer Science and English Literature — a rare combination that informs everything from code comments to classroom delivery.</p>
+    </div>
+    <div>
+      <div class="about-meta-grid">
+        <div class="meta-item"><div class="meta-k">Based in</div><div class="meta-v">Phnom Penh</div></div>
+        <div class="meta-item"><div class="meta-k">Experience</div><div class="meta-v">10+ Years</div></div>
+        <div class="meta-item"><div class="meta-k">Currently</div><div class="meta-v">ApexDreamLab</div></div>
+        <div class="meta-item"><div class="meta-k">Teaching at</div><div class="meta-v">PSBU Univ.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="section reveal" id="skills">
+  <div class="section-head">
+    <div class="section-num">02</div>
+    <div class="section-head-right">
+      <div class="section-eyebrow">Stack</div>
+      <div class="section-title">TOP SKILLS, TOP OF MIND</div>
+    </div>
+  </div>
+  <div class="skills-block">
+    <div class="skill-row">
+      <div class="skill-idx">01</div>
+      <div class="skill-nm">DATABASES</div>
+      <div class="skill-ds">Relational &amp; NoSQL · schema design · performance</div>
+      <div class="skill-tag core">Core</div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-idx">02</div>
+      <div class="skill-nm">AMAZON WEB SERVICES</div>
+      <div class="skill-ds">EC2, S3, Lambda, RDS · cloud architecture</div>
+      <div class="skill-tag core">Core</div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-idx">03</div>
+      <div class="skill-nm">REACT</div>
+      <div class="skill-ds">Component design · state management · UI engineering</div>
+      <div class="skill-tag core">Core</div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-idx">04</div>
+      <div class="skill-nm">PYTHON</div>
+      <div class="skill-ds">Scripting · automation · back-end services</div>
+      <div class="skill-tag">Lang</div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-idx">05</div>
+      <div class="skill-nm">EXPRESS &amp; NODE.JS</div>
+      <div class="skill-ds">REST APIs · server-side application logic</div>
+      <div class="skill-tag">Backend</div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-idx">06</div>
+      <div class="skill-nm">LINUX &amp; SHELL</div>
+      <div class="skill-ds">Server admin · scripting · automation</div>
+      <div class="skill-tag">DevOps</div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-idx">07</div>
+      <div class="skill-nm">FIGMA · UX</div>
+      <div class="skill-ds">Pixel-faithful design implementation</div>
+      <div class="skill-tag">Design</div>
+    </div>
+    <div class="skill-row">
+      <div class="skill-idx">08</div>
+      <div class="skill-nm">EDUCATION</div>
+      <div class="skill-ds">Curriculum design · mentorship · lecturing</div>
+      <div class="skill-tag core">Teach</div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="section reveal" id="experience">
+  <div class="section-head">
+    <div class="section-num">03</div>
+    <div class="section-head-right">
+      <div class="section-eyebrow">Experience</div>
+      <div class="section-title">A DECADE OF SHIPPING &amp; TEACHING</div>
+    </div>
+  </div>
+  <div class="exp-list">
+    <div class="exp-item">
+      <div class="exp-date">2024 — Present</div>
+      <div class="exp-body"><div class="exp-role">WEB DEVELOPER</div><div class="exp-company">ApexDreamLab · Cambodia</div></div>
+      <div class="exp-badge active">Current</div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-date">2021 — Present</div>
+      <div class="exp-body"><div class="exp-role">LECTURER</div><div class="exp-company">PSBU University · Phnom Penh</div></div>
+      <div class="exp-badge active">Active</div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-date">2020 — 2024</div>
+      <div class="exp-body"><div class="exp-role">WEB DEVELOPER</div><div class="exp-company">Suka Digital · Phnom Penh</div></div>
+      <div class="exp-badge">4 yrs 11 mos</div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-date">2017 — 2020</div>
+      <div class="exp-body"><div class="exp-role">WEB DEVELOPER</div><div class="exp-company">Marinax · Cambodia</div></div>
+      <div class="exp-badge">2 yrs 5 mos</div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-date">2015 — 2017</div>
+      <div class="exp-body"><div class="exp-role">GAME DEVELOPER</div><div class="exp-company">DWK · Cambodia</div></div>
+      <div class="exp-badge">2 yrs 2 mos</div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-date">2014 — 2015</div>
+      <div class="exp-body"><div class="exp-role">TEACHER</div><div class="exp-company">MIS — Modern International School</div></div>
+      <div class="exp-badge">1 yr</div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section class="section reveal" id="education">
+  <div class="section-head">
+    <div class="section-num">04</div>
+    <div class="section-head-right">
+      <div class="section-eyebrow">Education</div>
+      <div class="section-title">THREE DEGREES, ONE MINDSET</div>
+    </div>
+  </div>
+  <div class="edu-grid">
+    <div class="edu-item" data-num="MSc">
+      <div class="edu-yr">2022 — 2024</div>
+      <div class="edu-deg">Master of Science in Information Technology</div>
+      <div class="edu-sch">Norton University</div>
+    </div>
+    <div class="edu-item" data-num="BSc">
+      <div class="edu-yr">2009 — 2014</div>
+      <div class="edu-deg">Bachelor's, Computer Science</div>
+      <div class="edu-sch">Western University</div>
+    </div>
+    <div class="edu-item" data-num="BA">
+      <div class="edu-yr">2009 — 2014</div>
+      <div class="edu-deg">Bachelor's, English Language &amp; Literature</div>
+      <div class="edu-sch">Western University</div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTS -->
+<section class="section reveal" id="certifications">
+  <div class="section-head">
+    <div class="section-num">05</div>
+    <div class="section-head-right">
+      <div class="section-eyebrow">Certifications</div>
+      <div class="section-title">ALWAYS LEARNING</div>
+    </div>
+  </div>
+  <div class="certs-block">
+    <div class="cert-item">Linux Shell Scripting</div>
+    <div class="cert-item">Learning Python</div>
+    <div class="cert-item">Express Essential Training</div>
+    <div class="cert-item">VS Code Productivity Tips</div>
+    <div class="cert-item">Figma for UX Design</div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<div class="contact-band">
+  <div class="contact-inner reveal" id="contact">
+    <div class="contact-h">HAVE A<br>PROJECT<br>IN <span class="red-word">MIND?</span></div>
+    <div class="contact-right">
+      <div class="status-pill"><span class="dot"></span>Available for select projects · 2026</div>
+      <p>Open to freelance web development, teaching collaborations, and conversations about modern web engineering. The fastest way to reach me is by email.</p>
+      <div class="contact-btns">
+        <a href="mailto:oupisey.it@gmail.com" class="btn-b w">oupisey.it@gmail.com →</a>
+        <a href="https://www.linkedin.com/in/pisey-ou-78b830184" target="_blank" class="btn-b o">LinkedIn ↗</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-cell name">PISEY OU</div>
+    <div class="footer-cell">© 2026 · Phnom Penh, Cambodia</div>
+    <div class="footer-cell"><a href="mailto:oupisey.it@gmail.com">EMAIL</a></div>
+    <div class="footer-cell"><a href="https://www.linkedin.com/in/pisey-ou-78b830184" target="_blank">LINKEDIN</a></div>
+    <div class="footer-cell"><a href="#top">TOP ↑</a></div>
+  </div>
+</footer>
+
+<script>
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); io.unobserve(e.target); } });
+}, { threshold: 0.06 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>

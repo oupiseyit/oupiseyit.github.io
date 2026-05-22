@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pisey Ou — Web Developer & Educator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --cream: #f5f0e8;
+  --cream2: #ede8df;
+  --ink: #1c1208;
+  --ink2: rgba(28,18,8,0.6);
+  --ink3: rgba(28,18,8,0.38);
+  --red: #9b1d1d;
+  --red-soft: rgba(155,29,29,0.08);
+  --border: rgba(28,18,8,0.12);
+  --border2: rgba(28,18,8,0.22);
+  --serif: 'Cormorant Garamond', 'Georgia', serif;
+  --body: 'Crimson Pro', 'Georgia', serif;
+  --nav-bg: rgba(245,240,232,0.88);
+}
+
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 18px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* paper texture */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 0;
+  opacity: 0.6;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* ── NAV — MASTHEAD STYLE ── */
+.masthead-top {
+  text-align: center;
+  padding: 28px 0 0;
+  border-bottom: 2px solid var(--ink);
+  position: relative; z-index: 10;
+}
+.masthead-vol {
+  font-family: var(--body);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink2);
+  margin-bottom: 10px;
+}
+.masthead-name {
+  font-family: var(--serif);
+  font-size: clamp(40px, 8vw, 90px);
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  line-height: 0.95;
+  color: var(--ink);
+}
+.masthead-rule {
+  display: flex; align-items: center; justify-content: center;
+  gap: 16px; padding: 10px 0 14px; margin-top: 4px;
+}
+.rule-line { flex: 1; height: 1px; background: var(--ink); max-width: 200px; }
+.rule-text {
+  font-family: var(--body); font-size: 11px;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--ink2);
+}
+
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--nav-bg);
+  border-bottom: 1px solid var(--border2);
+  backdrop-filter: blur(10px);
+}
+.nav-inner {
+  max-width: 1160px; margin: 0 auto; padding: 0 40px;
+  display: flex; justify-content: space-between; align-items: center;
+  height: 52px;
+}
+.nav-links {
+  display: flex; gap: 0; font-family: var(--body);
+  font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase;
+}
+.nav-links a {
+  padding: 4px 20px; color: var(--ink2);
+  transition: color 0.2s;
+  border-right: 1px solid var(--border);
+}
+.nav-links a:first-child { border-left: 1px solid var(--border); }
+.nav-links a:hover { color: var(--red); }
+.nav-logo { font-family: var(--serif); font-size: 20px; color: var(--ink); letter-spacing: -0.01em; }
+.nav-cta {
+  display: flex; gap: 12px; align-items: center;
+  font-family: var(--body); font-size: 13px; letter-spacing: 0.1em;
+}
+.btn-lit {
+  padding: 8px 20px; font-family: var(--body); font-size: 13px;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  border: 1px solid var(--border2); background: transparent;
+  color: var(--ink); cursor: pointer; text-decoration: none;
+  transition: all 0.2s; display: inline-block;
+}
+.btn-lit:hover { background: var(--ink); color: var(--cream); }
+.btn-lit.red { background: var(--red); color: var(--cream); border-color: var(--red); }
+.btn-lit.red:hover { background: #7a1515; border-color: #7a1515; }
+
+/* ── HERO ── */
+.hero {
+  padding: 80px 40px 90px;
+  max-width: 1160px; margin: 0 auto;
+  position: relative; z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 80px; align-items: start;
+}
+
+.hero-kicker {
+  font-family: var(--body); font-size: 12px;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--red); margin-bottom: 24px;
+  display: flex; align-items: center; gap: 14px;
+}
+.hero-kicker::after { content: ''; flex: 0 0 60px; height: 1px; background: var(--red); }
+
+.hero h1 {
+  font-family: var(--serif);
+  font-size: clamp(44px, 6.5vw, 88px);
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  font-weight: 300;
+  color: var(--ink);
+  margin-bottom: 28px;
+}
+.hero h1 em { font-style: italic; color: var(--ink2); }
+
+.hero-lede {
+  font-size: 20px; color: var(--ink2); line-height: 1.7;
+  margin-bottom: 36px; max-width: 560px;
+  font-style: italic;
+}
+
+.hero-cta { display: flex; gap: 12px; flex-wrap: wrap; }
+
+/* Hero right column */
+.hero-right { padding-top: 8px; }
+
+.hero-portrait {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  filter: sepia(15%) contrast(1.05);
+  border: 1px solid var(--border2);
+  margin-bottom: 20px;
+}
+
+.sidebar-block {
+  border-top: 2px solid var(--ink);
+  padding-top: 16px; margin-bottom: 24px;
+}
+.sidebar-block h4 {
+  font-family: var(--body); font-size: 10px; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--ink2); margin-bottom: 10px;
+}
+.sidebar-block p {
+  font-family: var(--body); font-size: 15px; color: var(--ink);
+  line-height: 1.5;
+}
+
+.profile-stat {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+  background: var(--border); border: 1px solid var(--border);
+  margin-bottom: 20px;
+}
+.stat-cell { background: var(--cream); padding: 14px 16px; }
+.stat-label { font-family: var(--body); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink3); margin-bottom: 4px; }
+.stat-val { font-family: var(--serif); font-size: 20px; color: var(--ink); }
+
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; gap: 48px; }
+  .hero-right { display: none; }
+}
+
+/* ── PULL QUOTE ── */
+.pull-quote-band {
+  background: var(--ink); color: var(--cream);
+  padding: 60px 40px; text-align: center; position: relative; z-index: 1;
+  margin: 0;
+}
+.pull-quote {
+  font-family: var(--serif);
+  font-size: clamp(26px, 4vw, 52px);
+  font-weight: 300; font-style: italic;
+  line-height: 1.2; max-width: 900px; margin: 0 auto;
+}
+.pull-quote::before { content: '\201C'; }
+.pull-quote::after { content: '\201D'; }
+.pull-attribution {
+  margin-top: 24px; font-family: var(--body); font-size: 13px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(245,240,232,0.5);
+}
+
+/* ── SECTIONS ── */
+.section { padding: 90px 40px; max-width: 1160px; margin: 0 auto; position: relative; z-index: 1; }
+
+.section-head { margin-bottom: 60px; }
+.section-eyebrow {
+  font-family: var(--body); font-size: 11px; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--red); margin-bottom: 12px;
+  display: flex; align-items: center; gap: 14px;
+}
+.section-eyebrow::before { content: '§'; font-size: 14px; }
+.section-title {
+  font-family: var(--serif);
+  font-size: clamp(36px, 5vw, 64px);
+  line-height: 1.05; letter-spacing: -0.02em; font-weight: 300;
+}
+.section-title em { font-style: italic; color: var(--ink2); }
+
+/* ABOUT — DROPCAP */
+.about-layout { display: grid; grid-template-columns: 1.4fr 1fr; gap: 80px; }
+
+.dropcap::first-letter {
+  font-family: var(--serif);
+  font-size: 5.5em; font-weight: 300;
+  float: left; line-height: 0.78;
+  margin: 0.06em 0.1em 0 0;
+  color: var(--ink);
+}
+.about-text p { margin-bottom: 20px; font-size: 18px; color: var(--ink2); line-height: 1.8; }
+.about-text p strong { color: var(--ink); font-weight: 600; }
+
+.about-sidebar { border-top: 2px solid var(--ink); padding-top: 28px; }
+.about-sidebar h3 { font-family: var(--serif); font-size: 28px; font-weight: 300; margin-bottom: 20px; }
+.sidebar-list { list-style: none; }
+.sidebar-list li {
+  padding: 14px 0; border-bottom: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-family: var(--body); font-size: 15px;
+}
+.sidebar-list li span { color: var(--ink3); font-size: 13px; }
+
+@media (max-width: 860px) {
+  .about-layout { grid-template-columns: 1fr; gap: 48px; }
+}
+
+/* SKILLS — TYPOGRAPHIC LIST */
+.skills-cols { column-count: 2; column-gap: 60px; margin-bottom: 0; }
+.skill-entry {
+  break-inside: avoid; padding: 20px 0; border-bottom: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: baseline;
+}
+.skill-name-lit { font-family: var(--serif); font-size: 24px; font-weight: 300; color: var(--ink); }
+.skill-type { font-family: var(--body); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink3); }
+
+@media (max-width: 700px) { .skills-cols { column-count: 1; } }
+
+/* EXPERIENCE — TIMELINE WITH ORNAMENTS */
+.timeline-lit { border-top: 2px solid var(--ink); }
+.tl-item { padding: 28px 0; border-bottom: 1px solid var(--border); display: grid; grid-template-columns: 160px 1fr auto; gap: 40px; align-items: baseline; }
+.tl-item:hover .tl-role { color: var(--red); transition: color 0.2s; }
+.tl-date { font-family: var(--body); font-size: 13px; color: var(--ink3); letter-spacing: 0.06em; white-space: nowrap; }
+.tl-role { font-family: var(--serif); font-size: 26px; font-weight: 300; margin-bottom: 4px; color: var(--ink); }
+.tl-company { font-family: var(--body); font-size: 14px; color: var(--ink2); }
+.tl-ornament { font-family: var(--serif); font-size: 18px; color: var(--ink3); white-space: nowrap; font-style: italic; }
+
+@media (max-width: 700px) {
+  .tl-item { grid-template-columns: 1fr; gap: 6px; }
+  .tl-ornament { display: none; }
+}
+
+/* EDUCATION */
+.edu-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; }
+.edu-entry { border-top: 2px solid var(--ink); padding-top: 20px; }
+.edu-year { font-family: var(--body); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--red); margin-bottom: 10px; }
+.edu-degree { font-family: var(--serif); font-size: 22px; font-weight: 300; line-height: 1.25; margin-bottom: 6px; }
+.edu-school { font-family: var(--body); font-size: 15px; color: var(--ink2); font-style: italic; }
+
+/* CERTS */
+.certs-lit { display: flex; flex-wrap: wrap; gap: 10px; }
+.cert-lit {
+  font-family: var(--body); font-size: 14px; color: var(--ink2);
+  border: 1px solid var(--border2); padding: 8px 18px;
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: all 0.2s;
+}
+.cert-lit:hover { border-color: var(--red); color: var(--red); }
+.cert-lit::before { content: '✦'; color: var(--red); font-size: 10px; }
+
+/* CONTACT */
+.contact-section { background: var(--cream2); border-top: 2px solid var(--ink); }
+.contact-inner { max-width: 1160px; margin: 0 auto; padding: 100px 40px; text-align: center; }
+.contact-inner h2 { font-family: var(--serif); font-size: clamp(36px, 6vw, 80px); font-weight: 300; line-height: 1.05; margin-bottom: 24px; }
+.contact-inner h2 em { font-style: italic; color: var(--ink2); }
+.contact-inner p { font-size: 18px; color: var(--ink2); max-width: 520px; margin: 0 auto 36px; font-style: italic; }
+.contact-cta { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+/* FOOTER */
+footer {
+  background: var(--ink); color: rgba(245,240,232,0.5);
+  padding: 40px;
+}
+.footer-inner { max-width: 1160px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+.footer-name { font-family: var(--serif); font-size: 28px; color: var(--cream); font-weight: 300; }
+footer p { font-family: var(--body); font-size: 13px; letter-spacing: 0.08em; }
+.footer-links { display: flex; gap: 24px; font-family: var(--body); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; }
+.footer-links a { color: rgba(245,240,232,0.4); text-decoration: none; transition: color 0.2s; }
+.footer-links a:hover { color: var(--cream); }
+
+/* availability badge */
+.avail-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--body); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--red); border: 1px solid var(--red); padding: 5px 14px; margin-bottom: 24px;
+}
+.avail-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--red); animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+/* SECTION DIVIDER */
+.ornament-divider { text-align: center; padding: 20px 0; color: var(--ink3); letter-spacing: 0.5em; font-size: 13px; }
+
+/* REVEAL */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.9s cubic-bezier(0.22,1,0.36,1), transform 0.9s cubic-bezier(0.22,1,0.36,1); }
+.reveal.vis { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<!-- MASTHEAD -->
+<div class="masthead-top">
+  <div class="masthead-vol">Web Developer · Educator · Phnom Penh — Est. 2014</div>
+  <div class="masthead-name">Pisey Ou</div>
+  <div class="masthead-rule">
+    <div class="rule-line"></div>
+    <div class="rule-text">Building the web · Teaching the next</div>
+    <div class="rule-line"></div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">P.O.</div>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
+      <a href="#education">Education</a>
+    </div>
+    <div class="nav-cta">
+      <a href="https://www.linkedin.com/in/pisey-ou-78b830184" target="_blank" class="btn-lit">LinkedIn</a>
+      <a href="mailto:oupisey.it@gmail.com" class="btn-lit red">Get in touch →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div>
+    <div class="avail-badge"><span class="avail-dot"></span>Available for select projects · 2026</div>
+    <div class="hero-kicker">Web Developer &amp; Educator</div>
+    <h1>
+      Building<br>
+      the web,<br>
+      <em>teaching<br>the next.</em>
+    </h1>
+    <p class="hero-lede">
+      I'm Pisey Ou — a decade at the intersection of shipping interfaces and shaping the developers who'll build what comes next.
+    </p>
+    <div class="hero-cta">
+      <a href="#experience" class="btn-lit red">View my work →</a>
+      <a href="mailto:oupisey.it@gmail.com" class="btn-lit">oupisey.it@gmail.com</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img src="../profile-image.png" alt="Pisey Ou" class="hero-portrait" onerror="this.style.background='#d4cebc';this.removeAttribute('src')">
+    <div class="profile-stat">
+      <div class="stat-cell"><div class="stat-label">Based in</div><div class="stat-val">Phnom Penh</div></div>
+      <div class="stat-cell"><div class="stat-label">Experience</div><div class="stat-val">10+ yrs</div></div>
+      <div class="stat-cell"><div class="stat-label">Currently</div><div class="stat-val">ApexDream&shy;Lab</div></div>
+      <div class="stat-cell"><div class="stat-label">Teaching</div><div class="stat-val">PSBU Uni.</div></div>
+    </div>
+    <div class="sidebar-block">
+      <h4>Current stack</h4>
+      <p>React · AWS · Node.js · PostgreSQL · Linux</p>
+    </div>
+  </div>
+</section>
+
+<!-- PULL QUOTE -->
+<div class="pull-quote-band">
+  <div class="pull-quote">A developer who also teaches, and a teacher who still ships.</div>
+  <div class="pull-attribution">— 10 years in Phnom Penh</div>
+</div>
+
+<!-- ABOUT -->
+<section class="section reveal" id="about">
+  <div class="section-head">
+    <div class="section-eyebrow">01 / About</div>
+    <h2 class="section-title">A developer who <em>also teaches</em></h2>
+  </div>
+  <div class="about-layout">
+    <div class="about-text">
+      <p class="dropcap">
+        I've spent the last <strong>10+ years</strong> at the intersection of building and teaching. By day I ship web applications — React front-ends, AWS-backed services, and the database layers that hold them together.
+      </p>
+      <p>
+        In parallel, I lecture computer science at <strong>PSBU University</strong> in Phnom Penh, helping the next generation of Cambodian developers find their footing.
+      </p>
+      <p>
+        My path started in game development, moved through agency web work at Marinax and Suka Digital, and now lives at <strong>ApexDreamLab</strong>, where I'm focused on modern, performant, beautifully made digital products.
+      </p>
+      <p>
+        I hold an <strong>MSIT from Norton University</strong> and dual bachelor's degrees in Computer Science and English Literature — a combination that's quietly informed everything from how I write code comments to how I run a classroom.
+      </p>
+    </div>
+    <div class="about-sidebar">
+      <h3>Quick profile</h3>
+      <ul class="sidebar-list">
+        <li>Based in <span>Phnom Penh, Cambodia</span></li>
+        <li>Experience <span>10+ years</span></li>
+        <li>Employer <span>ApexDreamLab</span></li>
+        <li>Teaching <span>PSBU University</span></li>
+        <li>Education <span>MSIT, Norton Univ.</span></li>
+        <li>Languages <span>Khmer · English</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="ornament-divider">✦ ✦ ✦</div>
+
+<!-- SKILLS -->
+<section class="section reveal" id="skills">
+  <div class="section-head">
+    <div class="section-eyebrow">02 / Stack</div>
+    <h2 class="section-title">Top skills, <em>top of mind</em></h2>
+  </div>
+  <div class="skills-cols">
+    <div class="skill-entry">
+      <span class="skill-name-lit">Databases</span>
+      <span class="skill-type">Core</span>
+    </div>
+    <div class="skill-entry">
+      <span class="skill-name-lit">Amazon Web Services</span>
+      <span class="skill-type">Core</span>
+    </div>
+    <div class="skill-entry">
+      <span class="skill-name-lit">React</span>
+      <span class="skill-type">Core</span>
+    </div>
+    <div class="skill-entry">
+      <span class="skill-name-lit">Python</span>
+      <span class="skill-type">Language</span>
+    </div>
+    <div class="skill-entry">
+      <span class="skill-name-lit">Express &amp; Node.js</span>
+      <span class="skill-type">Backend</span>
+    </div>
+    <div class="skill-entry">
+      <span class="skill-name-lit">Linux &amp; Shell</span>
+      <span class="skill-type">DevOps</span>
+    </div>
+    <div class="skill-entry">
+      <span class="skill-name-lit">Figma · UX</span>
+      <span class="skill-type">Design</span>
+    </div>
+    <div class="skill-entry">
+      <span class="skill-name-lit">Education</span>
+      <span class="skill-type">Teaching</span>
+    </div>
+  </div>
+</section>
+
+<div class="ornament-divider">— ❧ —</div>
+
+<!-- EXPERIENCE -->
+<section class="section reveal" id="experience">
+  <div class="section-head">
+    <div class="section-eyebrow">03 / Experience</div>
+    <h2 class="section-title">A decade of <em>shipping &amp; teaching</em></h2>
+  </div>
+  <div class="timeline-lit">
+    <div class="tl-item">
+      <div class="tl-date">2024 — Present</div>
+      <div>
+        <div class="tl-role">Web Developer</div>
+        <div class="tl-company">ApexDreamLab · Cambodia</div>
+      </div>
+      <div class="tl-ornament">Current</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2021 — Present</div>
+      <div>
+        <div class="tl-role">Lecturer</div>
+        <div class="tl-company">PSBU University · Phnom Penh</div>
+      </div>
+      <div class="tl-ornament">Education</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2020 — 2024</div>
+      <div>
+        <div class="tl-role">Web Developer</div>
+        <div class="tl-company">Suka Digital · Phnom Penh</div>
+      </div>
+      <div class="tl-ornament">4 yrs 11 mos</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2017 — 2020</div>
+      <div>
+        <div class="tl-role">Web Developer</div>
+        <div class="tl-company">Marinax · Cambodia</div>
+      </div>
+      <div class="tl-ornament">2 yrs 5 mos</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2015 — 2017</div>
+      <div>
+        <div class="tl-role">Game Developer</div>
+        <div class="tl-company">DWK · Cambodia</div>
+      </div>
+      <div class="tl-ornament">2 yrs 2 mos</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2014 — 2015</div>
+      <div>
+        <div class="tl-role">Teacher</div>
+        <div class="tl-company">MIS — Modern International School</div>
+      </div>
+      <div class="tl-ornament">1 yr</div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section class="section reveal" id="education">
+  <div class="section-head">
+    <div class="section-eyebrow">04 / Education</div>
+    <h2 class="section-title">Three degrees, <em>one mindset</em></h2>
+  </div>
+  <div class="edu-cols">
+    <div class="edu-entry">
+      <div class="edu-year">2022 — 2024</div>
+      <div class="edu-degree">Master of Science in Information Technology</div>
+      <div class="edu-school">Norton University</div>
+    </div>
+    <div class="edu-entry">
+      <div class="edu-year">2009 — 2014</div>
+      <div class="edu-degree">Bachelor's, Computer Science</div>
+      <div class="edu-school">Western University</div>
+    </div>
+    <div class="edu-entry">
+      <div class="edu-year">2009 — 2014</div>
+      <div class="edu-degree">Bachelor's, English Language &amp; Literature</div>
+      <div class="edu-school">Western University</div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTS -->
+<section class="section reveal" id="certifications">
+  <div class="section-head">
+    <div class="section-eyebrow">05 / Certifications</div>
+    <h2 class="section-title">Always <em>learning</em></h2>
+  </div>
+  <div class="certs-lit">
+    <span class="cert-lit">Learning Linux Shell Scripting</span>
+    <span class="cert-lit">Learning Python</span>
+    <span class="cert-lit">Express Essential Training</span>
+    <span class="cert-lit">VS Code Productivity Tips</span>
+    <span class="cert-lit">Figma for UX Design</span>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<div class="contact-section">
+  <div class="contact-inner reveal" id="contact">
+    <h2>Have a project in mind?<br><em>Let's build it.</em></h2>
+    <p>
+      Open to freelance web development, teaching collaborations, and conversations about modern web engineering.
+    </p>
+    <div class="contact-cta">
+      <a href="mailto:oupisey.it@gmail.com" class="btn-lit red">oupisey.it@gmail.com →</a>
+      <a href="https://www.linkedin.com/in/pisey-ou-78b830184" target="_blank" class="btn-lit">Connect on LinkedIn</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-name">Pisey Ou</div>
+      <p>© 2026 · Built in Phnom Penh</p>
+    </div>
+    <div class="footer-links">
+      <a href="mailto:oupisey.it@gmail.com">Email</a>
+      <a href="https://www.linkedin.com/in/pisey-ou-78b830184" target="_blank">LinkedIn</a>
+      <a href="#top">Top ↑</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); io.unobserve(e.target); } });
+}, { threshold: 0.07 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
