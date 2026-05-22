@@ -3,27 +3,241 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pisey Ou</title>
+<title>Pisey Ou — Choose a Theme</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { height: 100%; }
-  body {
-    background: #080808;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'JetBrains Mono', 'Courier New', monospace;
-    color: rgba(255,255,255,0.35);
-    font-size: 12px;
-    letter-spacing: 0.12em;
-  }
-  .label { text-transform: uppercase; }
-  @keyframes fadeOut { to { opacity: 0; } }
-  body.bye { animation: fadeOut 0.3s 0.1s ease both; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { min-height: 100%; }
+
+body {
+  background: #080808;
+  color: #f0f0f0;
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  -webkit-font-smoothing: antialiased;
+  padding: 48px 32px 80px;
+}
+
+/* subtle grid */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none; z-index: 0;
+  mask-image: radial-gradient(ellipse at center top, black 20%, transparent 75%);
+}
+
+.wrap { max-width: 960px; margin: 0 auto; position: relative; z-index: 1; }
+
+/* ── HEADER ── */
+header { text-align: center; margin-bottom: 64px; }
+
+.header-eyebrow {
+  font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: rgba(255,255,255,0.3); margin-bottom: 20px;
+  display: flex; align-items: center; justify-content: center; gap: 14px;
+}
+.header-eyebrow::before,
+.header-eyebrow::after { content: ''; flex: 0 0 40px; height: 1px; background: rgba(255,255,255,0.12); }
+
+h1 {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: clamp(32px, 5vw, 52px);
+  font-weight: 400; letter-spacing: -0.02em; line-height: 1.1;
+  color: #f0f0f0; margin-bottom: 12px;
+}
+h1 em { font-style: italic; color: rgba(240,240,240,0.5); }
+
+.header-sub {
+  font-size: 12px; letter-spacing: 0.1em; color: rgba(255,255,255,0.28);
+  margin-bottom: 32px;
+}
+
+/* random button */
+.btn-random {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: 'JetBrains Mono', monospace; font-size: 12px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 10px 22px; border: 1px solid rgba(255,255,255,0.14);
+  background: transparent; color: rgba(255,255,255,0.45);
+  cursor: pointer; text-decoration: none;
+  transition: all 0.2s;
+}
+.btn-random:hover {
+  border-color: rgba(255,255,255,0.35);
+  color: #f0f0f0;
+  background: rgba(255,255,255,0.04);
+}
+.btn-random .dice { font-size: 14px; }
+
+/* ── THEME GRID ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.07);
+}
+
+.card {
+  background: #0d0d0d;
+  padding: 32px 28px 28px;
+  display: flex; flex-direction: column;
+  cursor: pointer; text-decoration: none;
+  transition: background 0.2s;
+  position: relative; overflow: hidden;
+}
+.card:hover { background: #111; }
+.card:hover .card-arrow { opacity: 1; transform: translateX(0); }
+.card:hover .card-swatch { opacity: 1; transform: scale(1); }
+
+/* accent glow on hover */
+.card::after {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: var(--accent, rgba(255,255,255,0.2));
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.25s ease;
+}
+.card:hover::after { transform: scaleX(1); }
+
+/* swatch / color indicator */
+.card-swatch {
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  background: var(--accent, rgba(255,255,255,0.1));
+  margin-bottom: 20px;
+  opacity: 0.7; transform: scale(0.92);
+  transition: opacity 0.2s, transform 0.2s;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+}
+
+.card-num {
+  font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(255,255,255,0.25); margin-bottom: 8px;
+}
+
+.card-name {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: 22px; font-weight: 400; color: #f0f0f0;
+  margin-bottom: 6px; line-height: 1.15;
+}
+
+.card-tag {
+  font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--accent-text, rgba(255,255,255,0.3));
+  margin-bottom: 14px;
+}
+
+.card-desc {
+  font-size: 12px; color: rgba(255,255,255,0.35);
+  line-height: 1.7; flex: 1; letter-spacing: 0.02em;
+}
+
+.card-arrow {
+  margin-top: 20px; font-size: 13px;
+  color: rgba(255,255,255,0.3);
+  opacity: 0; transform: translateX(-6px);
+  transition: all 0.2s;
+  letter-spacing: 0.08em;
+}
+
+/* ── FOOTER ── */
+footer {
+  text-align: center; margin-top: 48px;
+  font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(255,255,255,0.18);
+  position: relative; z-index: 1;
+}
+
+/* ── TRANSITION OUT ── */
+@keyframes fadeOut { to { opacity: 0; } }
+body.bye { animation: fadeOut 0.3s ease both; pointer-events: none; }
+
+/* ── ANIMATIONS ── */
+@keyframes riseIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+header { animation: riseIn 0.7s cubic-bezier(0.22,1,0.36,1) both; }
+.grid  { animation: riseIn 0.8s 0.15s cubic-bezier(0.22,1,0.36,1) both; }
+footer { animation: riseIn 0.6s 0.3s cubic-bezier(0.22,1,0.36,1) both; }
 </style>
 </head>
 <body>
-<span class="label">Loading…</span>
+<div class="wrap">
+
+  <header>
+    <div class="header-eyebrow">Portfolio · Pisey Ou</div>
+    <h1>Choose a <em>theme</em></h1>
+    <div class="header-sub">5 distinct visual directions — or let fate decide</div>
+    <a href="#" class="btn-random" id="btn-random">
+      <span class="dice">⚄</span> Random
+    </a>
+  </header>
+
+  <div class="grid">
+
+    <a class="card" href="pages/direction-1-terminal.html"
+       style="--accent: #33ff5a; --accent-text: #33ff5a;">
+      <div class="card-swatch">💻</div>
+      <div class="card-num">01 / Terminal</div>
+      <div class="card-name">Phosphor Green</div>
+      <div class="card-tag">Dark · Monospace · CRT</div>
+      <div class="card-desc">Pure black with phosphor-green glow, CRT scanlines, and everything rendered as terminal output — git log, ls, cat.</div>
+      <div class="card-arrow">→ Open</div>
+    </a>
+
+    <a class="card" href="pages/direction-2-literary.html"
+       style="--accent: #9b1d1d; --accent-text: #c0706070;">
+      <div class="card-swatch">📖</div>
+      <div class="card-num">02 / Literary</div>
+      <div class="card-name">Warm Editorial</div>
+      <div class="card-tag">Light · Serif · Magazine</div>
+      <div class="card-desc">Aged-paper cream, Cormorant Garamond throughout, newspaper masthead, drop caps, and a pull-quote band in solid ink.</div>
+      <div class="card-arrow">→ Open</div>
+    </a>
+
+    <a class="card" href="pages/direction-3-swiss.html"
+       style="--accent: #e8231a; --accent-text: #e8231a;">
+      <div class="card-swatch">🔴</div>
+      <div class="card-num">03 / Swiss</div>
+      <div class="card-name">Bauhaus Bold</div>
+      <div class="card-tag">Light · Display · Grid</div>
+      <div class="card-desc">Bebas Neue headers, hard Bauhaus red, zero border-radius, ticker band, and giant floating section numbers as background texture.</div>
+      <div class="card-arrow">→ Open</div>
+    </a>
+
+    <a class="card" href="pages/direction-4-aurora.html"
+       style="--accent: linear-gradient(135deg,#8b5cf6,#2dd4bf); --accent-text: #8b5cf6;">
+      <div class="card-swatch" style="background: linear-gradient(135deg,#8b5cf6,#2dd4bf);">✦</div>
+      <div class="card-num">04 / Aurora</div>
+      <div class="card-name">Glass &amp; Gradient</div>
+      <div class="card-tag">Dark · Glass · Animated</div>
+      <div class="card-desc">Animated aurora orbs, glassmorphism cards, gradient text headlines, and a pill-shaped floating nav — soft and premium.</div>
+      <div class="card-arrow">→ Open</div>
+    </a>
+
+    <a class="card" href="pages/direction-5-original.html"
+       style="--accent: #4f8cff; --accent-text: #4f8cff;">
+      <div class="card-swatch">◆</div>
+      <div class="card-num">05 / Original</div>
+      <div class="card-name">Dark Editorial</div>
+      <div class="card-tag">Dark · Serif · Animated</div>
+      <div class="card-desc">The current live site — Instrument Serif, blue accent, curtain reveal animation, grid overlay, and a day/night toggle.</div>
+      <div class="card-arrow">→ Open</div>
+    </a>
+
+  </div>
+
+  <footer>© 2026 Pisey Ou · Phnom Penh</footer>
+</div>
+
 <script>
   var pages = [
     'pages/direction-1-terminal.html',
@@ -32,11 +246,22 @@
     'pages/direction-4-aurora.html',
     'pages/direction-5-original.html'
   ];
-  var pick = pages[Math.floor(Math.random() * pages.length)];
-  setTimeout(function () {
+
+  document.getElementById('btn-random').addEventListener('click', function (e) {
+    e.preventDefault();
+    var pick = pages[Math.floor(Math.random() * pages.length)];
     document.body.classList.add('bye');
-    setTimeout(function () { window.location.replace(pick); }, 400);
-  }, 120);
+    setTimeout(function () { window.location.href = pick; }, 300);
+  });
+
+  document.querySelectorAll('.card').forEach(function (card) {
+    card.addEventListener('click', function (e) {
+      e.preventDefault();
+      var href = card.getAttribute('href');
+      document.body.classList.add('bye');
+      setTimeout(function () { window.location.href = href; }, 300);
+    });
+  });
 </script>
 </body>
 </html>
