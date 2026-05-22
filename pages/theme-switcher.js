@@ -96,6 +96,7 @@ body.ts-leaving{animation:ts-fade-out 0.28s ease both!important;pointer-events:n
     a.addEventListener('click', function (e) {
       e.preventDefault();
       if (t.file === current) { closePanel(); return; }
+      try { localStorage.setItem('pisey-theme', t.file); } catch (e) {}
       document.body.classList.add('ts-leaving');
       setTimeout(function () { window.location.href = t.file; }, 290);
     });

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,6 +20,36 @@
   --border: rgba(51,255,90,0.15);
   --mono: 'JetBrains Mono', 'Courier New', monospace;
 }
+
+/* ── LIGHT MODE (paper terminal) ── */
+html[data-theme="light"] {
+  --g: #1e4012;
+  --g2: rgba(30,64,18,0.55);
+  --g3: rgba(30,64,18,0.35);
+  --g4: rgba(30,64,18,0.10);
+  --a: #6b3800;
+  --b: #005f8a;
+  --bg: #f0ede4;
+  --bg2: rgba(30,64,18,0.04);
+  --border: rgba(30,64,18,0.18);
+}
+html[data-theme="light"] body::before { opacity: 0; }
+html[data-theme="light"] body::after { opacity: 0; }
+html[data-theme="light"] nav { background: rgba(240,237,228,0.96); }
+
+/* ── THEME TOGGLE BUTTON ── */
+.theme-toggle-t {
+  font-family: var(--mono); font-size: 12px;
+  padding: 6px 10px; border: 1px solid var(--border);
+  background: transparent; color: var(--g2); cursor: pointer;
+  transition: all 0.15s; display: inline-flex; align-items: center;
+}
+.theme-toggle-t:hover { color: var(--g); border-color: var(--g2); background: var(--g4); }
+.theme-toggle-t svg { width: 14px; height: 14px; }
+.theme-toggle-t .icon-sun { display: none; }
+.theme-toggle-t .icon-moon { display: block; }
+html[data-theme="light"] .theme-toggle-t .icon-sun { display: block; }
+html[data-theme="light"] .theme-toggle-t .icon-moon { display: none; }
 
 html { scroll-behavior: smooth; }
 
@@ -255,6 +285,10 @@ footer a:hover { color: var(--g); }
       <a href="#education"><span class="pre">cat</span> edu</a>
     </div>
     <div class="nav-right">
+      <button id="theme-toggle" class="theme-toggle-t" aria-label="Toggle theme" title="Toggle day / night">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
       <a href="https://www.linkedin.com/in/pisey-ou-78b830184" target="_blank" class="btn-t">linkedin ↗</a>
       <a href="mailto:oupisey.it@gmail.com" class="btn-t primary">$ mail me</a>
     </div>
@@ -533,6 +567,27 @@ const io = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); io.unobserve(e.target); } });
 }, { threshold: 0.07 });
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+<script>
+  (function () {
+    var html = document.documentElement;
+    var KEY = 'pisey-color-scheme';
+    var saved = null;
+    try { saved = localStorage.getItem(KEY); } catch (e) {}
+    if (saved === 'light' || saved === 'dark') {
+      html.setAttribute('data-theme', saved);
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+      html.setAttribute('data-theme', 'light');
+    }
+    var btn = document.getElementById('theme-toggle');
+    if (btn) {
+      btn.addEventListener('click', function () {
+        var next = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+        html.setAttribute('data-theme', next);
+        try { localStorage.setItem(KEY, next); } catch (e) {}
+      });
+    }
+  })();
 </script>
 <script src="theme-switcher.js"></script>
 </body>

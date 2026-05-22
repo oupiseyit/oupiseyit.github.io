@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,6 +24,40 @@
   --body: 'Crimson Pro', 'Georgia', serif;
   --nav-bg: rgba(245,240,232,0.88);
 }
+
+/* ── DARK MODE ── */
+html[data-theme="dark"] {
+  --cream: #12100c;
+  --cream2: #1c1813;
+  --ink: #e8dfc8;
+  --ink2: rgba(232,223,200,0.6);
+  --ink3: rgba(232,223,200,0.38);
+  --red: #c94040;
+  --red-soft: rgba(201,64,64,0.1);
+  --border: rgba(232,223,200,0.12);
+  --border2: rgba(232,223,200,0.22);
+  --nav-bg: rgba(18,16,12,0.94);
+}
+html[data-theme="dark"] body::before { opacity: 0.3; }
+html[data-theme="dark"] .masthead-top { border-bottom-color: var(--ink); }
+html[data-theme="dark"] .rule-line { background: var(--ink); }
+html[data-theme="dark"] .btn-lit:hover { background: var(--ink); color: var(--cream); }
+html[data-theme="dark"] .btn-lit.red { background: var(--red); color: var(--cream); border-color: var(--red); }
+
+/* ── THEME TOGGLE BUTTON ── */
+.theme-toggle-lit {
+  width: 36px; height: 36px;
+  display: grid; place-items: center;
+  border: 1px solid var(--border2); background: transparent;
+  color: var(--ink); cursor: pointer;
+  transition: all 0.2s;
+}
+.theme-toggle-lit:hover { background: var(--ink); color: var(--cream); }
+.theme-toggle-lit svg { width: 15px; height: 15px; }
+.theme-toggle-lit .icon-sun { display: block; }
+.theme-toggle-lit .icon-moon { display: none; }
+html[data-theme="dark"] .theme-toggle-lit .icon-sun { display: none; }
+html[data-theme="dark"] .theme-toggle-lit .icon-moon { display: block; }
 
 html { scroll-behavior: smooth; font-size: 16px; }
 
@@ -364,6 +398,10 @@ footer p { font-family: var(--body); font-size: 13px; letter-spacing: 0.08em; }
       <a href="#education">Education</a>
     </div>
     <div class="nav-cta">
+      <button id="theme-toggle" class="theme-toggle-lit" aria-label="Toggle theme" title="Toggle day / night">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
       <a href="https://www.linkedin.com/in/pisey-ou-78b830184" target="_blank" class="btn-lit">LinkedIn</a>
       <a href="mailto:oupisey.it@gmail.com" class="btn-lit red">Get in touch →</a>
     </div>
@@ -622,6 +660,27 @@ const io = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); io.unobserve(e.target); } });
 }, { threshold: 0.07 });
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+<script>
+  (function () {
+    var html = document.documentElement;
+    var KEY = 'pisey-color-scheme';
+    var saved = null;
+    try { saved = localStorage.getItem(KEY); } catch (e) {}
+    if (saved === 'light' || saved === 'dark') {
+      html.setAttribute('data-theme', saved);
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      html.setAttribute('data-theme', 'dark');
+    }
+    var btn = document.getElementById('theme-toggle');
+    if (btn) {
+      btn.addEventListener('click', function () {
+        var next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', next);
+        try { localStorage.setItem(KEY, next); } catch (e) {}
+      });
+    }
+  })();
 </script>
 <script src="theme-switcher.js"></script>
 </body>
