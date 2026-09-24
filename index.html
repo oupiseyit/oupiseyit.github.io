@@ -22,19 +22,7 @@
 <body>
 <span>Loading…</span>
 <script>
-  var pages = [
-    'pages/direction-1-terminal.html',
-    'pages/direction-2-literary.html',
-    'pages/direction-3-swiss.html',
-    'pages/direction-4-aurora.html',
-    'pages/direction-5-original.html'
-  ];
-  var saved = null;
-  try { saved = localStorage.getItem('pisey-theme'); } catch (e) {}
-  var pick = (saved && pages.indexOf(saved) !== -1)
-    ? saved
-    : 'pages/direction-4-aurora.html';
-  window.location.replace(pick);
+  window.location.replace('pages/direction-4-aurora.html');
 </script>
 </body>
 </html>

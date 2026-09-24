@@ -458,6 +458,17 @@ footer {
 .hero-stats-band { animation: fadeUp 0.8s 1.1s both; }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
 @keyframes scaleIn { from { opacity: 0; transform: scale(0.88); } to { opacity: 1; transform: scale(1); } }
+/* GO TO TOP */
+.to-top {
+  position: fixed; bottom: 24px; right: 24px; z-index: 100;
+  width: 44px; height: 44px; border-radius: 50%; border: 0; cursor: pointer;
+  display: grid; place-items: center; font-size: 18px; color: white;
+  background: linear-gradient(135deg, var(--violet), var(--teal));
+  box-shadow: 0 0 24px rgba(139,92,246,0.35);
+  opacity: 0; pointer-events: none; transition: opacity 0.25s, transform 0.2s;
+}
+.to-top.show { opacity: 1; pointer-events: auto; }
+.to-top:hover { transform: translateY(-2px); }
 </style>
 </head>
 <body>
@@ -726,6 +737,8 @@ footer {
   </div>
 </section>
 
+<button class="to-top" aria-label="Go to top" onclick="scrollTo({top:0,behavior:'smooth'})">↑</button>
+
 <footer>
   <div>© 2026 Pisey Ou · Built in Phnom Penh</div>
   <div class="footer-links">
@@ -739,6 +752,8 @@ const io = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); io.unobserve(e.target); } });
 }, { threshold: 0.07 });
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+const toTop = document.querySelector('.to-top');
+addEventListener('scroll', () => toTop.classList.toggle('show', scrollY > 400), { passive: true });
 </script>
 <script>
   (function () {
@@ -761,6 +776,5 @@ document.querySelectorAll('.reveal').forEach(el => io.observe(el));
     }
   })();
 </script>
-<script src="theme-switcher.js"></script>
 </body>
 </html>
