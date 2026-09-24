@@ -13,8 +13,8 @@
   /* ── INJECT STYLES into <head> ── */
   var style = document.createElement('style');
   style.textContent = '\
-#ts-root{all:initial;position:fixed;bottom:24px;right:24px;z-index:2147483647;font-family:"JetBrains Mono","Courier New",monospace;font-size:12px;display:block;pointer-events:all;}\
-#ts-toggle{\
+#ts-root{all:initial;position:fixed;bottom:24px;right:24px;z-index:2147483647;font-family:"JetBrains Mono","Courier New",monospace;font-size:12px;display:flex;gap:8px;pointer-events:all;}\
+#ts-toggle,#ts-top{\
   display:flex;align-items:center;gap:8px;padding:10px 18px;\
   background:rgba(12,12,12,0.92);color:rgba(255,255,255,0.75);\
   border:1px solid rgba(255,255,255,0.22);\
@@ -25,7 +25,9 @@
   font-family:inherit;font-size:12px;\
   user-select:none;white-space:nowrap;\
 }\
-#ts-toggle:hover{color:#fff;border-color:rgba(255,255,255,0.4);background:rgba(20,20,20,0.96);}\
+#ts-top{display:none;}\
+#ts-top.ts-show{display:flex;}\
+#ts-toggle:hover,#ts-top:hover{color:#fff;border-color:rgba(255,255,255,0.4);background:rgba(20,20,20,0.96);}\
 #ts-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}\
 #ts-panel{\
   position:absolute;bottom:calc(100% + 10px);right:0;\
@@ -125,7 +127,18 @@ body.ts-leaving{animation:ts-fade-out 0.28s ease both!important;pointer-events:n
   toggle.appendChild(lbl);
   toggle.appendChild(arrow);
 
+  /* go-to-top button, shown once scrolled down */
+  var top = document.createElement('button');
+  top.id = 'ts-top';
+  top.setAttribute('aria-label', 'Go to top');
+  top.textContent = '↑ Top';
+  top.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+  function syncTop() { top.classList.toggle('ts-show', window.scrollY > 400); }
+  window.addEventListener('scroll', syncTop, { passive: true });
+  syncTop();
+
   root.appendChild(panel);
+  root.appendChild(top);
   root.appendChild(toggle);
 
   /* ── APPEND TO <html> to escape body stacking contexts ── */

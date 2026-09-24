@@ -43,9 +43,6 @@ html[data-theme="light"] .glass-card {
   background: rgba(255,255,255,0.65);
   border-color: rgba(0,0,0,0.08);
 }
-html[data-theme="light"] .nav-links a:hover { background: rgba(0,0,0,0.04); }
-html[data-theme="light"] .btn-nav.ghost { color: var(--text2); border-color: var(--border2); }
-html[data-theme="light"] .btn-nav.ghost:hover { background: rgba(0,0,0,0.04); }
 
 /* ── THEME TOGGLE ── */
 .theme-toggle-aurora {
@@ -172,6 +169,10 @@ nav {
   border-radius: 100px;
   padding: 10px 10px 10px 24px;
   display: flex; align-items: center; justify-content: space-between;
+  /* pill is always dark, so keep its text light in both themes */
+  --text: #f0f2f8;
+  --text2: rgba(240,242,248,0.6);
+  --border2: rgba(255,255,255,0.14);
 }
 .logo {
   font-family: var(--display); font-size: 16px; font-weight: 700;
@@ -489,7 +490,7 @@ footer {
           <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
         </button>
         <a href="https://www.linkedin.com/in/pisey-ou-78b830184" target="_blank" class="btn-nav ghost">LinkedIn ↗</a>
-        <a href="mailto:oupisey.it@gmail.com" class="btn-nav grad-btn">Get in touch →</a>
+        <a href="https://t.me/Ou_Pisey" target="_blank" rel="noopener" class="btn-nav grad-btn">Get in touch on Telegram →</a>
       </div>
     </div>
   </div>
@@ -506,7 +507,7 @@ footer {
   <img src="../profile-image.png" alt="Pisey Ou" class="hero-avatar" onerror="this.style.background='rgba(139,92,246,0.2)';this.removeAttribute('src')">
 
   <h1>
-    Building the web,<br>
+    Building the web, game,<br>
     <span class="grad">teaching the next.</span>
   </h1>
 
@@ -730,7 +731,6 @@ footer {
   <div class="footer-links">
     <a href="mailto:oupisey.it@gmail.com">Email</a>
     <a href="https://www.linkedin.com/in/pisey-ou-78b830184" target="_blank">LinkedIn</a>
-    <a href="#top">Back to top ↑</a>
   </div>
 </footer>
 

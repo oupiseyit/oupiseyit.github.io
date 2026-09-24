@@ -33,7 +33,7 @@
   try { saved = localStorage.getItem('pisey-theme'); } catch (e) {}
   var pick = (saved && pages.indexOf(saved) !== -1)
     ? saved
-    : pages[Math.floor(Math.random() * pages.length)];
+    : 'pages/direction-4-aurora.html';
   window.location.replace(pick);
 </script>
 </body>
